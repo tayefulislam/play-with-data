@@ -36,8 +36,21 @@ const CountryDetail = () => {
                 <div class="hero-content text-center">
                     <div class="max-w-md">
                         <h1 class="text-5xl font-bold">{data[0]?.name?.common}</h1>
-                        <p class="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
-                        <button class="btn btn-primary">Get Started</button>
+                        <h1 class="text-xl font-bold">Official: {data[0]?.name?.official}</h1>
+
+                        <img src={data[0]?.flags.png} alt="" />
+
+                        <p>Area: {data[0]?.area}</p>
+                        <p>Population: {data[0]?.population}</p>
+                        <p>Time: {data[0]?.timezones[0]}</p>
+
+
+                        <a className='btn btn-sm btn-error text-white' href={data[0]?.maps?.googleMaps}>Google Map</a>
+
+
+
+
+
                     </div>
                 </div>
             </div>
