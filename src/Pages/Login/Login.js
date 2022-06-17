@@ -2,7 +2,8 @@ import React from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
-
+import { toast } from 'react-toastify';
+import { useEffect } from 'react';
 const Login = () => {
 
     const [
@@ -25,12 +26,34 @@ const Login = () => {
 
     }
 
+    let showError = error?.message
+    console.log(showError)
+
+    const navigate = useNavigate()
+
 
     console.log(user)
 
+
+
+    if (user) {
+        navigate('/')
+
+    }
+
+    useEffect(() => {
+        if (user) {
+
+            toast.success('Your Login Successful')
+        }
+
+    }, [user])
+
+
+
     return (
         <div className='flex justify-center items-center my-12'>
-            <div className="card w-96 bg-[#3553d6] shadow-xl text-white">
+            <div className="card w-96 bg-[#2145e6] shadow-xl text-white">
                 <div className="card-body ">
                     <h2 className="text-center text-2xl font-bold">Login</h2>
 
@@ -46,6 +69,7 @@ const Login = () => {
                             </label>
 
                             <input type="email"
+                                required
                                 placeholder="Email Address"
                                 name="email"
                                 className="input input-bordered w-full max-w-xs"
@@ -63,6 +87,7 @@ const Login = () => {
                             </label>
 
                             <input type="password"
+                                required
                                 placeholder="Password"
                                 name="password"
                                 className="input input-bordered w-full max-w-xs"
@@ -71,6 +96,15 @@ const Login = () => {
 
 
                         </div>
+
+
+                        {
+                            loading && <h1 className='text-center'>Loading...</h1>
+                        }
+
+                        {
+                            error && <h1 className='text-center'>{showError}</h1>
+                        }
 
 
 

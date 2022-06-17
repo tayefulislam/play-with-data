@@ -1,10 +1,14 @@
 import React from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
-
+import { toast } from 'react-toastify';
 import auth from '../../firebase.init'
-const Register = () => {
+import { useEffect } from 'react';
 
+
+
+const Register = () => {
+    const navigate = useNavigate()
 
     const [
         createUserWithEmailAndPassword,
@@ -15,6 +19,7 @@ const Register = () => {
 
     const [updateProfile, updating, updateError] = useUpdateProfile(auth);
 
+    let showError = error?.message;
 
     const handleRegister = async (event) => {
         event.preventDefault()
@@ -22,7 +27,7 @@ const Register = () => {
         const name = event.target.name.value;
         const password = event.target.password.value;
         const email = event.target.email.value;
-        console.log(name, email, password)
+        // console.log(name, email, password)
 
         await createUserWithEmailAndPassword(email, password)
         await updateProfile({ displayName: name })
@@ -32,6 +37,19 @@ const Register = () => {
 
     console.log(user)
 
+
+    if (user) {
+        navigate('/')
+
+    }
+
+    useEffect(() => {
+        if (user) {
+
+            toast.success('Registation Successful')
+        }
+
+    }, [user])
 
 
     return (
@@ -51,6 +69,7 @@ const Register = () => {
                             </label>
 
                             <input type="text"
+                                required
                                 placeholder="Your Name"
                                 name='name'
                                 className="input input-bordered w-full max-w-xs"
@@ -65,6 +84,7 @@ const Register = () => {
                             </label>
 
                             <input type="email"
+                                required
                                 placeholder="Email Address"
                                 name="email"
                                 className="input input-bordered w-full max-w-xs"
@@ -82,6 +102,7 @@ const Register = () => {
                             </label>
 
                             <input type="password"
+                                required
                                 placeholder="Password"
                                 name="password"
                                 className="input input-bordered w-full max-w-xs"
@@ -90,6 +111,15 @@ const Register = () => {
 
 
                         </div>
+
+
+                        {
+                            loading && <h1 className='text-center'>Loading...</h1>
+                        }
+
+                        {
+                            error && <h1 className='text-center'>{showError}</h1>
+                        }
 
 
 

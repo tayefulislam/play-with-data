@@ -25,7 +25,11 @@ const CountriesFeed = () => {
 
 
                 {
-                    data.map(country => <div class="card w-full bg-base-100 shadow-xl">
+                    data.map(country => <div class="card w-full bg-base-100 shadow-xl"
+                        data-aos="zoom-in"
+                        data-aos-duration="500"
+
+                    >
                         <figure><img className='h-48' src={country?.flags?.png} alt="Shoes" /></figure>
                         <div class="card-body">
                             <h2 class="card-title">
