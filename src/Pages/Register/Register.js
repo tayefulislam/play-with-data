@@ -1,7 +1,39 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
 
+import auth from '../../firebase.init'
 const Register = () => {
+
+
+    const [
+        createUserWithEmailAndPassword,
+        user,
+        loading,
+        error,
+    ] = useCreateUserWithEmailAndPassword(auth);
+
+    const [updateProfile, updating, updateError] = useUpdateProfile(auth);
+
+
+    const handleRegister = async (event) => {
+        event.preventDefault()
+
+        const name = event.target.name.value;
+        const password = event.target.password.value;
+        const email = event.target.email.value;
+        console.log(name, email, password)
+
+        await createUserWithEmailAndPassword(email, password)
+        await updateProfile({ displayName: name })
+
+
+    }
+
+    console.log(user)
+
+
+
     return (
         <div className='flex justify-center items-center my-12'>
             <div className="card w-96 bg-[#3553d6] shadow-xl text-white">
@@ -9,10 +41,10 @@ const Register = () => {
                     <h2 className="text-center text-2xl font-bold">Sign Up</h2>
 
 
-                    <form  >
+                    <form onSubmit={handleRegister}>
 
 
-                        <div className="form-control w-full max-w-xs">
+                        <div className="form-control w-full max-w-xs text-black">
                             <label className="label">
                                 <span className="label-text text-white">Name</span>
 
@@ -26,7 +58,7 @@ const Register = () => {
                             />
 
                         </div>
-                        <div className="form-control w-full max-w-xs">
+                        <div className="form-control w-full max-w-xs text-black">
                             <label className="label">
                                 <span className="label-text text-white">Email</span>
 
@@ -40,7 +72,10 @@ const Register = () => {
                             />
 
                         </div>
-                        <div className="form-control w-full max-w-xs">
+
+
+
+                        <div className="form-control w-full max-w-xs text-black">
                             <label className="label">
                                 <span className="label-text text-white">Password</span>
 
