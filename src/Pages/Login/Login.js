@@ -26,6 +26,8 @@ const Login = () => {
     }
 
 
+    console.log(user)
+
     return (
         <div className='flex justify-center items-center my-12'>
             <div className="card w-96 bg-[#3553d6] shadow-xl text-white">
