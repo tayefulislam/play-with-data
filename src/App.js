@@ -23,6 +23,7 @@ function App() {
         <Route path="/detail/:name" element={<CountryDetail></CountryDetail>}> </Route>
         <Route path='/register' element={<Register></Register>}> </Route>
         <Route path='/login' element={<Login></Login>}> </Route>
+        {/* check */}
 
       </Routes>
 
